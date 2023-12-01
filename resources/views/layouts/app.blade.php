@@ -34,7 +34,9 @@
 
   <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
 
-  <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/.png')}}" />
+  {{-- <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/.png')}}" /> --}}
+  <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}" />
+
 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   @yield('head')
@@ -134,9 +136,9 @@
 
           <li><a class="nav-link" href="{{url('/')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
           </li>
+          <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
           <li><a class="nav-link" href="{{url('/industries')}}"><i class="fa fa-industry"></i><span>Industries</span></a>
           <li><a class="nav-link" href="{{url('surveys')}}"><i class="fa fa-poll"></i><span>Partner Surveys</span></a></li>
-          <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
           <li><a class="nav-link" href="{{url('partners')}}"><i class="fa fa-address-card"></i><span>Partners</span></a></li>
           <li><a class="nav-link" href="{{url('/users')}}"><i class="fas fa-user"></i><span>Users</span></a></li>
         </ul>

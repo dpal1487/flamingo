@@ -73,10 +73,10 @@ Projects
                           <td>{{strtoupper($project->client)}}_{{$project->project_name}} - ({{$project->country}})</td>
                           <td class="td-link"><a href="{{$project->client_live_url}}">{{$project->client_live_url}}</button></td>
                             <td class="td-link"><a href="{{$project->client_test_url}}">{{$project->client_test_url}}</button></td>
-                          <td><input type="number" id="count" data-id="{{$project->id}}" disabled="disabled"/></td>
-                          <!-- <td>{{$project->end_date}}</td> -->
+                          <td><input type="number" class="form-control" style="width: 80px;" id="count" value="{{ $project->count }}" data-id="{{$project->id}}" />
+                        </td>
                           <td>
-                            <select class="form-control status" data-id="{{$project->id}}">
+                            <select class="form-control status"  style="width:100px" data-id="{{$project->id}}">
                               <option value="">Select status</option>
                               <option value="open" {{$project->status == 'open' ? 'selected' : ''}}>Open</option>
                               <option value="close" {{$project->status == 'close' ? 'selected' : ''}}>Close</option>

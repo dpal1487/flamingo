@@ -82,7 +82,7 @@ Partner Surveys
 
                           <th>LOI</th>
 
-                          <th>Cost Ratio</th>
+                          {{-- <th>Cost Ratio</th> --}}
 
                           <th>Status</th>
 
@@ -106,19 +106,19 @@ Partner Surveys
 
                           <td class="no-wrap">{{$project->project_name}} - {{$project->country}}</td>
 
-                          {{-- <td>{{count(\App\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'complete'))->get())}}</td>
+                          <td>{{count(\App\Models\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'complete'))->get())}}</td>
 
-                          <td>{{count(\App\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'terminate'))->get())}}</td>
+                          <td>{{count(\App\Models\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'terminate'))->get())}}</td>
 
-                          <td>{{count(\App\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>''))->get())}}</td>
+                          <td>{{count(\App\Models\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>''))->get())}}</td>
 
-                          <td>{{count(\App\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'quotafull'))->get())}}</td> --}}
+                          <td>{{count(\App\Models\PartnerSurvey::where(array('project_id'=>$project->id,'status'=>'quotafull'))->get())}}</td>
 
                           <td>{{$project->incedance_rate}}</td>
 
                           <td>{{$project->time}}</td>
 
-                          <td></td>
+                          {{-- <td></td> --}}
 
                           <td>{{strtoupper($project->status)}}</td>
 
