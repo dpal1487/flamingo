@@ -1,18 +1,26 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class LoginController extends Controller
+class AdminAuthController extends Controller
 {
     public function index()
     {
         return view('auth.login');
     }
-    public function postLogin(Request $request)
+    protected function credentials($request)
+    {
+    if(is_numeric($request->get('username'))){
+        return ['username'=>$request->get('username'),'password'=>$request->get('password')];
+    }
+        return ['username' => $request->get('username'), 'password'=>$request->get('password')];
+    }
+    public function adminLogin(Request $request)
     {
         $validator = Validator::make($request->all(),[
          'username'=>'required',
@@ -23,8 +31,8 @@ class LoginController extends Controller
        }
        else
        {
-           if (Auth::guard('admin')->attempt($this->credentials($request))) {
-         	    return redirect('/');
+        if (Auth::guard('admin')->attempt($this->credentials($request))) {
+         	    return redirect()->intended('/');
         }
         else
         {
@@ -33,18 +41,11 @@ class LoginController extends Controller
         }
         }
     }
-    protected function credentials($request)
-    {
-    if(is_numeric($request->get('username'))){
-        return ['username'=>$request->get('username'),'password'=>$request->get('password')];
-    }
-        return ['username' => $request->get('username'), 'password'=>$request->get('password')];
-    }
-    public function logout(Request $request) {
-      Auth::logout();
-      $request->session()->invalidate();
-      $request->session()->regenerateToken();
-      return redirect('/login');
-    }
 
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->to('/admin/login');
+    }
 }

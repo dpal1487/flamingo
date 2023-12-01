@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Surveys;
-use App\Projects;
-use App\Partners;
-use App\PartnerSurvey;
-use DB;
-use Str;
+use App\Models\Surveys;
+use App\Models\Projects;
+use App\Models\Partners;
+use App\Models\PartnerSurvey;
+use Illuminate\Support\Str;
+
 class SurveyInitiateController extends Controller
 {
     public function start(Request $request)
@@ -47,7 +47,7 @@ class SurveyInitiateController extends Controller
         	for ($i=1; $i--; $i>0) {
             	$number .= Str::random();
         	}
-    	} while ( !empty(DB::table('partner_surveys')->where('uid', $number)->first(['uid'])) );
+    	} while ( !empty(PartnerSurvey::where('uid', $number)->first(['uid'])) );
     	return $number;
     }
 }

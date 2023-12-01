@@ -80,7 +80,7 @@ class PartnerController extends Controller
     {
         if(Partners::where('id',$id)->delete())
         {
-            return response()->json(['success'=>false,'message'=>'Partner successfully deleted.']);
+            return response()->json(['success'=>true,'message'=>'Partner successfully deleted.']);
         }
     }
     public function partnerId()

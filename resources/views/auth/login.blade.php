@@ -26,7 +26,7 @@
       }
       .panel-heading
       {
-        padding-left: 10px;  
+        padding-left: 10px;
       }
       .panel-heading h1
       {
@@ -44,7 +44,7 @@
       <div class="navbar-bg">
           <a href="{{url('/')}}">
             <div class="logo-header">
-              <img alt="image" src="{{asset('img/footer-logo.png')}}" class="header-logo">
+              <img alt="image" src="{{asset('assets/img/footer-logo.png')}}" class="header-logo">
             </div>
             </a>
       </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\PartnerController;
@@ -25,11 +26,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -42,25 +38,32 @@ Route::get('/', function () {
 |
 */
 
+// Auth::routes();
 
 Route::get('/clear-session', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
 Route::group(['middleware' => 'guest'], function () {
-
 Route::get('/login', [LoginController ::class ,'index'])->name('login');
 Route::post('/login', [LoginController::class , 'postLogin']);
-Route::post('logout', [LoginController::class , 'doLogout'])->name('logout');
+Route::post('logout', [LoginController::class , 'logout'])->name('logout');
 });
+
+// Admin login controller
+
+// Route::group(['middleware' => 'guest' , 'prefix' => 'admin'], function () {
+//     Route::get('/login', [AdminAuthController ::class ,'index'])->name('admin.login');
+//     Route::post('/login', [AdminAuthController::class , 'adminLogin']);
+//     Route::post('logout', [AdminAuthController::class , 'logout'])->name('admin.logout');
+//     });
 //Home Controller
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('', [WelcomeController::class , 'index']);
     /*if(Auth::user()->role()==1)
     {*/
         //Testimonial Route
-
         Route::get('surveys',[SurveyController::class,'index']);
         Route::post('survey/partner/store',[SurveyController::class,'store']);
         Route::post('survey/partner/edit/{id}',[SurveyController::class,'partnerEdit']);
@@ -121,6 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
     //}
 });
 Route::get('surveyInitiate',[SurveyInitiateController::class,'start']);
+
 
 
 

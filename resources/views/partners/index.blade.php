@@ -56,7 +56,7 @@ Partners
 
                           <th>QuotafullUrl</th>
 
-                          <th>Status</th>
+                          {{-- <th>Status</th> --}}
 
                           <th>Action</th>
 
@@ -76,7 +76,7 @@ Partners
 
                           <td class="no-wrap"><button class="btn btn-secondary" data-val="{{$partner->quotafull_url}}">Click Here</button></td>
 
-                          <td class="no-wrap">{{$partner->status}}</td>
+                          {{-- <td class="no-wrap">{{$partner->status}}</td> --}}
 
                           <td class="no-wrap">
 
