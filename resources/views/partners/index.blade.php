@@ -10,118 +10,117 @@ Partners
 
 <div class="main-content">
 
-        <section class="section">
+  <section class="section">
 
-          <div class="section-header">
+    <div class="section-header">
 
-            <h1>Partners</h1>
+      <h1>Partners</h1>
 
-            <div class="section-header-breadcrumb">
+      <div class="section-header-breadcrumb">
 
-              <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
 
-              <div class="breadcrumb-item"><a href="#">Partners</a></div>
+        <div class="breadcrumb-item"><a href="#">Partners</a></div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-12 col-md-12 col-lg-12">
+
+        <div class="card">
+
+          <div class="card-header text-right">
+
+            <a href="{{url('partner/create')}}" class="btn btn-primary float-right">Add Partner</a>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="table-responsive">
+
+              <table class="table table-bordered table-md">
+
+                <tbody>
+                  <tr>
+
+                    <th>Partner ID</th>
+
+                    <th>Partner Name</th>
+
+                    <th>CompleteUrl</th>
+
+                    <th>TerminateUrl</th>
+
+                    <th>QuotafullUrl</th>
+
+
+                    <th>Action</th>
+
+                  </tr>
+
+                  @foreach($partners as $partner)
+
+                  <tr>
+
+                    <td>{{$partner->id}}</td>
+
+                    <td class="no-wrap">{{$partner->name}}</td>
+
+                    <td class="no-wrap"><button class="btn btn-secondary copyButton" data-val="{{$partner->complete_url}}">Click Here</button></td>
+
+                    <td class="no-wrap"><button class="btn btn-secondary copyButton" data-val="{{$partner->terminate_url}}">Click Here</button></td>
+
+                    <td class="no-wrap"><button class="btn btn-secondary copyButton" data-val="{{$partner->quotafull_url}}">Click Here</button></td>
+
+
+                    <td class="no-wrap">
+
+                      <a class="btn btn-primary" href="{{url('partner/'.$partner->id)}}"><i class="fa fa-edit"></i></a>
+
+                      <button class="btn btn-danger remove-btn" data-id="{{$partner->id}}"><i class="fa fa-trash"></i></a>
+
+                    </td>
+
+                  </tr>
+
+                  @endforeach
+
+                </tbody>
+
+
+
+              </table>
 
             </div>
 
           </div>
 
-          <div class="row">
+          <div class="card-footer text-right">
 
-            <div class="col-12 col-md-12 col-lg-12">
+            {!! $partners->links('pagination::bootstrap-5') !!}
 
-                <div class="card">
-
-                  <div class="card-header text-right">
-
-                    <a href="{{url('partner/create')}}" class="btn btn-primary float-right">Add Partner</a>
-
-                  </div>
-
-                  <div class="card-body">
-
-                    <div class="table-responsive">
-
-                      <table class="table table-bordered table-md">
-
-                        <tbody><tr>
-
-                          <th>Partner ID</th>
-
-                          <th>Partner Name</th>
-
-                          <th>CompleteUrl</th>
-
-                          <th>TerminateUrl</th>
-
-                          <th>QuotafullUrl</th>
-
-
-                          <th>Action</th>
-
-                        </tr>
-
-                        @foreach($partners as $partner)
-
-                        <tr>
-
-                          <td>{{$partner->id}}</td>
-
-                          <td class="no-wrap">{{$partner->name}}</td>
-
-                          <td class="no-wrap"><button class="btn btn-secondary " data-val="{{$partner->complete_url}}">Click Here</button></td>
-
-                          <td class="no-wrap"><button class="btn btn-secondary" data-val="{{$partner->terminate_url}}">Click Here</button></td>
-
-                          <td class="no-wrap"><button class="btn btn-secondary" data-val="{{$partner->quotafull_url}}">Click Here</button></td>
-
-
-                          <td class="no-wrap">
-
-                            <a class="btn btn-primary" href="{{url('partner/'.$partner->id)}}"><i class="fa fa-edit"></i></a>
-
-                            <button class="btn btn-danger remove-btn" data-id="{{$partner->id}}"><i class="fa fa-trash"></i></a>
-
-                          </td>
-
-                        </tr>
-
-                        @endforeach
-
-                      </tbody>
-
-
-
-                      </table>
-
-                    </div>
-
-                  </div>
-
-                  <div class="card-footer text-right">
-
-                    {!! $partners->links('pagination::bootstrap-5') !!}
-
-
-                  </div>
-
-                </div>
-
-              </div>
 
           </div>
 
-        </section>
+        </div>
 
       </div>
 
-      <!-- Modal -->
+    </div>
+
+  </section>
+
+</div>
+
+<!-- Modal -->
 
 <div id="adModal" class="modal fade" role="dialog">
 
   <div class="modal-dialog modal-lg">
-
-
 
     <!-- Modal content-->
 
@@ -137,61 +136,61 @@ Partners
 
       <form id="addForm" action="{{url('/dashboard/partner/store')}}" method="post">
 
-      <div class="modal-body">
+        <div class="modal-body">
 
-        <div class="row">
+          <div class="row">
 
-          <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">
 
-            <label for="name">Partner Name</label>
+              <label for="name">Partner Name</label>
 
-            <input type="text" class="form-control" id="name" name="name" required placeholder="Enter partner name"/>
+              <input type="text" class="form-control" id="name" name="name" required placeholder="Enter partner name" />
 
-          </div>
+            </div>
 
-          <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">
 
-            <label for="terminate_url">TerminateUrl</label>
+              <label for="terminate_url">TerminateUrl</label>
 
-            <input type="text" class="form-control" id="terminate_url" name="terminate_url" required placeholder="Enter terminate url"/>
+              <input type="text" class="form-control" id="terminate_url" name="terminate_url" required placeholder="Enter terminate url" />
 
-          </div>
+            </div>
 
-          <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">
 
-            <label for="complete_url">Completes</label>
+              <label for="complete_url">Completes</label>
 
-            <input type="text" class="form-control" id="complete_url" name="complete_url" required placeholder="Enter complete"/>
+              <input type="text" class="form-control" id="complete_url" name="complete_url" required placeholder="Enter complete" />
 
-          </div>
+            </div>
 
-          <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">
 
-            <label for="quotafull_url">Quotafull URL</label>
+              <label for="quotafull_url">Quotafull URL</label>
 
-            <input type="text" class="form-control" id="quotafull_url" name="quotafull_url" required placeholder="Enter quotafull url"/>
+              <input type="text" class="form-control" id="quotafull_url" name="quotafull_url" required placeholder="Enter quotafull url" />
 
-          </div>
+            </div>
 
-          <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">
 
-            <label for="complete">Complete URL</label>
+              <label for="complete">Complete URL</label>
 
-            <input type="text" class="form-control" id="complete" name="complete" required placeholder="Enter complete url"/>
+              <input type="text" class="form-control" id="complete" name="complete" required placeholder="Enter complete url" />
+
+            </div>
 
           </div>
 
         </div>
 
-      </div>
+        <div class="modal-footer">
 
-      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
 
-        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-
-      </div>
+        </div>
 
       </form>
 
@@ -208,10 +207,9 @@ Partners
 @section('js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
+  $(function() {
 
-  $(function () {
-
-    $("#addForm").submit(function(){
+    $("#addForm").submit(function() {
 
       $.ajax({
 
@@ -234,44 +232,69 @@ Partners
       return false;
 
     });
-    $(".remove-btn").click(function()
-  {
-    var id=$(this).attr('data-id');
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        $.ajax({
-        url: "/partner/remove/"+id,
-        method: "post",
-        success: function(data)
-        {
-          if(data.success)
-          {
-            swal(data.message, {
-              icon: "success",
-            }).then((value)=>{
-              window.location.reload();
-            });
-            return;
-          }
-          swal(data.message);
-        }
-      })
+    $(".remove-btn").click(function() {
+      var id = $(this).attr('data-id');
+      swal({
+          title: "Are you sure?",
+          text: "Once deleted, you will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              url: "/partner/remove/" + id,
+              method: "post",
+              success: function(data) {
+                if (data.success) {
+                  swal(data.message, {
+                    icon: "success",
+                  }).then((value) => {
+                    window.location.reload();
+                  });
+                  return;
+                }
+                swal(data.message);
+              }
+            })
 
-      } else {
-        swal("Your imaginary file is safe!");
-      }
+          } else {
+            swal("Your imaginary file is safe!");
+          }
+        });
     });
-  });
+
+    $(".copyButton").click(function() {
+      // Get the data-val attribute value
+      var textToCopy = $(this).data("val");
+
+      // Create a temporary textarea to hold the text
+      var tempTextarea = $("<textarea>");
+      $("body").append(tempTextarea);
+
+      // Set the textarea value to the text you want to copy
+      tempTextarea.val(textToCopy);
+
+      // Select the text in the textarea
+      tempTextarea.select();
+
+      // Copy the selected text to the clipboard
+      document.execCommand("copy");
+
+      // Remove the temporary textarea
+      tempTextarea.remove();
+
+      // You can also provide some feedback to the user
+      swal({
+        icon: 'success',
+        title: 'Text copied to clipboard',
+        text: textToCopy,
+      });
+      // alert("Text copied to clipboard: " + textToCopy);
+    });
 
   })
-
 </script>
 
 @endsection

@@ -7,11 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Projects extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    protected $fillable=['id','project_name','industry_id','client','project_id','country','client_live_url','client_test_url','cost','time','incedance_rate','number_of_complete','end_date','remarks','status'];
-	/*public function surveys()
+	protected $fillable = ['id', 'project_name', 'industry_id', 'client', 'project_id', 'country', 'client_live_url', 'client_test_url', 'cost', 'time', 'incedance_rate', 'number_of_complete', 'end_date', 'remarks', 'status'];
+	public function surveys()
 	{
-		return $this->hasMany(Surveys::class,'pid','id');
-	}*/
+		return $this->hasMany(Surveys::class, 'pid', 'id');
+	}
+
+	public function industry()
+	{
+		return $this->hasOne(Industries::class, 'id', 'industry_id');
+	}
+
+	public function client()
+	{
+		return $this->hasOne(Client::class, 'id', 'client_id');
+	}
 }

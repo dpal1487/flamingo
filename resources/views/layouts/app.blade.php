@@ -45,7 +45,7 @@
 
 <body data-gr-c-s-loaded="true" class="light light-sidebar theme-white">
 
-<div id="app">
+  <div id="app">
 
     <div class="main-wrapper main-wrapper-1">
 
@@ -57,9 +57,7 @@
 
           <ul class="navbar-nav mr-3">
 
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i
-
-                  class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i class="fas fa-bars"></i></a></li>
 
             <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
 
@@ -75,9 +73,7 @@
 
         <ul class="navbar-nav navbar-right">
 
-          <li class="dropdown"><a href="#" data-toggle="dropdown"
-
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 
               <img alt="image" src="https://flamingoinsights.com/assets/logo.png" class="user-img-radious-style">
 
@@ -86,8 +82,6 @@
             <div class="dropdown-menu dropdown-menu-right">
 
               <div class="dropdown-title">Hello Flamingo Insights</div>
-
-
 
               <a href="#" class="dropdown-item has-icon">
 
@@ -99,10 +93,9 @@
 
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <a class="dropdown-item has-icon text-danger"
-                    href="{{ route('logout') }}"onclick="event.preventDefault();
+                <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                 this.closest('form').submit();"> Logout</a>
-            </form>
+              </form>
               {{-- <a href="/logout" class="dropdown-item has-icon text-danger">
 
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -119,9 +112,9 @@
 
       <div class="main-sidebar sidebar-style-2">
 
-        <aside id="sidebar-wrapper" style="background-color: cornsilk;">
+        <aside id="sidebar-wrapper">
 
-          <div class="sidebar-brand">
+          <div class="sidebar-brand" style="background-color: #d7d6d0;">
 
             <a href="{{url('')}}">
 
@@ -132,21 +125,21 @@
           </div>
 
           <ul class="sidebar-menu">
-          <!--<li class="menu-header">Main</li>-->
+            <!--<li class="menu-header">Main</li>-->
 
-          <li><a class="nav-link" href="{{url('/')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-          </li>
-          <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
-          <li><a class="nav-link" href="{{url('/industries')}}"><i class="fa fa-industry"></i><span>Industries</span></a>
-          <li><a class="nav-link" href="{{url('surveys')}}"><i class="fa fa-poll"></i><span>Partner Surveys</span></a></li>
-          <li><a class="nav-link" href="{{url('partners')}}"><i class="fa fa-address-card"></i><span>Partners</span></a></li>
-          <li><a class="nav-link" href="{{url('/users')}}"><i class="fas fa-user"></i><span>Users</span></a></li>
-        </ul>
+            <li><a class="nav-link" href="{{url('/')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            </li>
+            <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
+            <li><a class="nav-link" href="{{url('/industries')}}"><i class="fa fa-industry"></i><span>Industries</span></a>
+            <li><a class="nav-link" href="{{url('surveys')}}"><i class="fa fa-poll"></i><span>Partner Surveys</span></a></li>
+            <li><a class="nav-link" href="{{url('partners')}}"><i class="fa fa-address-card"></i><span>Partners</span></a></li>
+            <li><a class="nav-link" href="{{url('/users')}}"><i class="fas fa-user"></i><span>Users</span></a></li>
+          </ul>
         </aside>
       </div>
       <div class="wrapper">
-      @include('layouts.notification')
-      @yield('content')
+        @include('layouts.notification')
+        @yield('content')
       </div>
       <footer class="main-footer">
 
@@ -193,4 +186,3 @@
 </body>
 
 </html>
-
