@@ -4,10 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Industries extends Model
+class Survey extends Model
 {
-    use HasFactory;
-	protected $fillable=['name','status'];
-
+    protected $fillable=['pid','uid','vid','toid','starting_ip','end_ip','status','start','end'];
 }

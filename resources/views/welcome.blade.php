@@ -97,15 +97,19 @@ Dashboard
                   @foreach($projects as $project)
 
                   <tr>
-                    <td><a href="#">{{$project->project_name}} 1</a></td>
-                    <td class="font-weight-600">Sarah Smith</td>
+                    <td><a href="#">{{$project->project_id}} 1</a></td>
+                    <td class="font-weight-600">{{$project->industry?->name}}</td>
 
                     <td>
-                      <div class="badge badge-warning">In Progress</div>
+                      @if ($project->status == 'pause')
+                      <div class="badge badge-warning">{{$project->status}}</div>
+                      @elseif($project->status == 'open')
+                      <div class="badge badge-success">{{$project->status}}</div>
+                      @endif
                     </td>
 
                     <td>
-                      <a href="#" class="btn btn-primary">Detail</a>
+                      <a href="project/{{$project->id}}" class="btn btn-primary">Detail</a>
                     </td>
                   </tr>
                   @endforeach

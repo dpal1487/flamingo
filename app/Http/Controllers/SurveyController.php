@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use App\Models\Projects;
-use App\Models\Partners;
-use App\Models\PartnerProjects;
+use App\Models\Project;
+use App\Models\Partner;
+use App\Models\PartnerProject;
 use App\Exports\PartnerSurveys;
 use App\Exports\PartnerSurveysExport;
 use App\Models\PartnerSurvey;
@@ -19,14 +19,14 @@ class SurveyController extends Controller
     private $data;
     public function index(Request $request)
     {
-        $data['partners'] = Partners::orderBy('id', 'desc')->get();
+        $data['partners'] = Partner::orderBy('id', 'desc')->get();
         if ($request->ajax()) {
             return $this->projectFilter($request);
         } else {
             if (!empty($request->keyword)) {
-                $data['projects'] = Projects::where('project_name', 'like', '%' . $request->keyword . '%')->orWhere('project_id', 'like', '%' . $request->keyword . '%')->orderBy('id', 'desc')->paginate(40);
+                $data['projects'] = Project::where('project_name', 'like', '%' . $request->keyword . '%')->orWhere('project_id', 'like', '%' . $request->keyword . '%')->orderBy('id', 'desc')->paginate(40);
             } else {
-                $data['projects'] = Projects::orderBy('id', 'desc')->paginate(40);
+                $data['projects'] = Project::orderBy('id', 'desc')->paginate(40);
             }
         }
         return view('survey.index', $data);
@@ -49,8 +49,8 @@ class SurveyController extends Controller
             'quotafull_url' => $request->quotafull_url,
             'status' => $request->status
         );
-        if (!PartnerProjects::where(array('project_id' => $request->pid, 'partner_id' => $request->vid))->first()) {
-            if (PartnerProjects::create($data)) {
+        if (!PartnerProject::where(array('project_id' => $request->pid, 'partner_id' => $request->vid))->first()) {
+            if (PartnerProject::create($data)) {
                 return response()->json(['success' => true, 'message' => 'Partner Added Successfully']);
             }
         } else {
@@ -59,10 +59,10 @@ class SurveyController extends Controller
     }
     public function partnerProjectList($pid)
     {
-        $partners = PartnerProjects::where('project_id', $pid)->get();
+        $partners = PartnerProject::where('project_id', $pid)->get();
         if (count($partners) > 0) {
             foreach ($partners as $partner) {
-                $project = Projects::where('id', $pid)->first();
+                $project = Project::where('id', $pid)->first();
                 $this->data .= '<tr>
                 <td>PS - ' . $partner->id . '</td>
                 <td>' . $partner->partner_name . '</td>
@@ -85,7 +85,7 @@ class SurveyController extends Controller
     }
     public function partnerEdit($id)
     {
-        $partner = PartnerProjects::where('id', $id)->with('project')->first();
+        $partner = PartnerProject::where('id', $id)->with('project')->first();
         return response()->json(['success' => true, 'partner' => $partner]);
     }
     public function updatePartnerSurvey(Request $request)
@@ -104,7 +104,7 @@ class SurveyController extends Controller
             'quotafull_url' => $request->quotafull_url,
             'status' => $request->status
         );
-        if (PartnerProjects::where(['partner_id' => $request->vid, 'project_id' => $request->pid])->update($this->data)) {
+        if (PartnerProject::where(['partner_id' => $request->vid, 'project_id' => $request->pid])->update($this->data)) {
             return response()->json(['success' => true, 'message' => 'Partner Update Successfully']);
         } else {
             return response()->json(['success' => false, 'message' => 'Partners Already Added']);
@@ -112,7 +112,7 @@ class SurveyController extends Controller
     }
     public function partner($id)
     {
-        $partner = Partners::where('id', $id)->first();
+        $partner = Partner::where('id', $id)->first();
         if ($partner) {
             return response()->json(['success' => true, 'partner' => $partner]);
         }
@@ -121,7 +121,7 @@ class SurveyController extends Controller
     public function surveyStatus(Request $request)
     {
         //return $request->all();
-        $project = Projects::where(['id' => $request->pid])->first();
+        $project = Project::where(['id' => $request->pid])->first();
         if (!empty($project)) {
             return '<tr>
                 <td>' . $project->project_id . '</td>
@@ -142,9 +142,9 @@ class SurveyController extends Controller
         $keyword = $request->keyword;
         $projects = "";
         if (!empty($keyword)) {
-            $projects = Projects::where('project_name', 'like', '%' . $keyword . '%')->orWhere('project_id', 'like', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate(15);
+            $projects = Project::where('project_name', 'like', '%' . $keyword . '%')->orWhere('project_id', 'like', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate(15);
         } else {
-            $projects = Projects::orderBy('id', 'desc')->paginate(15);
+            $projects = Project::orderBy('id', 'desc')->paginate(15);
         }
         if (!empty($projects) && count($projects)) {
             foreach ($projects as $project) {
@@ -170,7 +170,7 @@ class SurveyController extends Controller
     }
     public function destroy($id)
     {
-        if (PartnerProjects::where('id', $id)->delete()) {
+        if (PartnerProject::where('id', $id)->delete()) {
             return response()->json(['success' => true, 'message' => 'Partner deleted successfully']);
         }
         return response()->json(['success' => false, 'message' => 'Opps something wrong']);
@@ -181,8 +181,8 @@ class SurveyController extends Controller
         //return $ptid;
         if (!empty($pid) && !empty($ptid)) {
             $array = array('pid' => $pid, 'ptid' => $ptid);
-            $project_id = Projects::where('id', $pid)->first()->project_id;
-            $name = strtoupper(Partners::where('id', $ptid)->first()?->name);
+            $project_id = Project::where('id', $pid)->first()->project_id;
+            $name = strtoupper(Partner::where('id', $ptid)->first()?->name);
 
             // return $name;
             return Excel::download(new PartnerSurveysExport($array), $name . '_' . $project_id . '.xlsx');
