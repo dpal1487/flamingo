@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Projects
+Surveys
 @endsection
 @section('head')
 <style>
@@ -22,10 +22,10 @@ Projects
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Projects</h1>
+      <h1>Surveys</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="#">Projects</a></div>
+        <div class="breadcrumb-item"><a href="#">Surveys</a></div>
       </div>
     </div>
     <div class="row">
@@ -45,23 +45,39 @@ Projects
                 @if($surveys)
                 <thead>
                   <tr>
+                    <th>Survey ID</th>
                     <th>Project ID</th>
                     <th>Project Name</th>
-                    <th>User Name</th>
-                    <th>Client Test URL</th>
-                    <th>Count</th>
+                    <th>Startting IP</th>
+                    <th>End IP</th>
+                    <th>Duration</th>
+                    <th>Date/Time</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody class="project-list">
                   @foreach($surveys as $survey)
-
                   <tr>
+                    <td>{{$survey->id}}</td>
                     <td>{{$survey->project->project_id}}</td>
                     <td>{{$survey->project->project_name}}</td>
-                    <td class="td-link"><a href="{{$survey->client_live_url}}">{{$survey->client_live_url}}</button></td>
-                    <td class="td-link"><a href="{{$survey->client_test_url}}">{{$survey->client_test_url}}</button></td>
+                    <td>{{$survey->starting_ip}}</td>
+                    <td>{{$survey->end_ip}}</td>
+                    <td>{{$survey->duration}}</td>
+                    <td>{{$survey->date}}</td>
+                    <td>
+                      @if ($survey->status == '')
+                      <div class="badge badge-light">Incomplete</div>
+                      @elseif ($survey->status == 'complete')
+                      <div class="badge badge-success">{{$survey->status}}</div>
+                      @elseif($survey->status == 'quotafull')
+                      <div class="badge badge-info">{{$survey->status}}</div>
+                      @elseif($survey->status == 'terminate')
+                      <div class="badge badge-danger">{{$survey->status}}</div>
+                      @elseif($survey->status == 'security-terminate')
+                      <div class="badge badge-warning">{{$survey->status}}</div>
+                      @endif
+                    </td>
                   </tr>
                   @endforeach
                 </tbody>

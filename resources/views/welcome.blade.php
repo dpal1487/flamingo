@@ -97,7 +97,7 @@ Dashboard
                   @foreach($projects as $project)
 
                   <tr>
-                    <td><a href="#">{{$project->project_id}} 1</a></td>
+                    <td><a href="project/{{$project->id}}">{{$project->project_id}} </a></td>
                     <td class="font-weight-600">{{$project->industry?->name}}</td>
 
                     <td>
@@ -105,6 +105,12 @@ Dashboard
                       <div class="badge badge-warning">{{$project->status}}</div>
                       @elseif($project->status == 'open')
                       <div class="badge badge-success">{{$project->status}}</div>
+                      @elseif($project->status == 'close')
+                      <div class="badge badge-info">{{$project->status}}</div>
+                      @elseif($project->status == 'invoiced')
+                      <div class="badge badge-primary">{{$project->status}}</div>
+                      @elseif($project->status == 'archived')
+                      <div class="badge badge-light">{{$project->status}}</div>
                       @endif
                     </td>
 

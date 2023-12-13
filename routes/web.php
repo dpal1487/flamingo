@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('industry/create', [IndustryController::class, 'create']);
     Route::post('industry/create', [IndustryController::class, 'store']);
     Route::get('industry/edit/{id}', [IndustryController::class, 'edit']);
-    Route::post('industry/update/{id}', [IndustryController::class, 'update']);
+    Route::post('industry/update', [IndustryController::class, 'update']);
     Route::post('industry/delete/{id}', [IndustryController::class, 'delete']);
 
 

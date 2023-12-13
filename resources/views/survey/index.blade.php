@@ -6,6 +6,7 @@
 
     @endsection
 
+
     @section('content')
 
     <div class="main-content">
@@ -302,6 +303,9 @@
           </div>
 
           <form id="partnerForm" method="post">
+            <div class="alert alert-danger print-error-msg" style="display:none">
+              <ul></ul>
+            </div>
 
             <div class="modal-body">
 
@@ -431,6 +435,8 @@
 
               <button type="submit" class="btn btn-primary">Submit</button>
 
+
+
               <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
 
             </div>
@@ -447,7 +453,7 @@
 
     @section('js')
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
       $(function() {
@@ -504,6 +510,7 @@
             }
           },
           submitHandler: function(form) {
+            console.log("sd")
             $.ajax({
               type: "POST",
               url: $(form).attr('action'),
@@ -513,13 +520,25 @@
                   swal("Success", data.message, "success");
                   $("#partnerModal").modal('hide');
                 } else {
-                  swal("Error", data.message, "error");
+                  printErrorMsg(data.errors);
+                  console.log("Error form", data.errors, "error");
+                  // swal("Error", data.errors, "error");
                 }
               }
             });
             return false; // required to block normal submit since you used ajax
           }
+
+
         });
+
+        function printErrorMsg(msg) {
+          $(".print-error-msg").find("ul").html('');
+          $(".print-error-msg").css('display', 'block');
+          $.each(msg, function(key, value) {
+            $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+          });
+        }
         $("body").on("click", "#partnerListBtn", function() {
           $("#partnerList tbody").html('');
           var pid = $(this).attr('data-val');

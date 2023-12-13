@@ -104,13 +104,17 @@ class ProjectController extends Controller
       }
     }
   }
- 
+
   public function show($id)
   {
 
     $surveys = PartnerSurvey::where('project_id', $id)->get();
 
     $surveys = PartnerSurveyResources::collection($surveys);
+
+    // foreach ($surveys as $value) {
+    //   return $value;
+    // }
 
     if (count($surveys) > 0) {
       return view('project.show', compact('surveys'));
@@ -119,7 +123,7 @@ class ProjectController extends Controller
     }
   }
 
- 
+
   public function edit($id)
   {
     $this->data['partners'] = Partner::orderBy('id', 'DESC')->get();
@@ -132,7 +136,7 @@ class ProjectController extends Controller
     }
   }
 
-  
+
   public function update(Request $request)
   {
     $data = array(

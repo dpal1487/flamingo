@@ -11,6 +11,7 @@ use App\Models\PartnerProject;
 use App\Exports\PartnerSurveys;
 use App\Exports\PartnerSurveysExport;
 use App\Models\PartnerSurvey;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -33,6 +34,22 @@ class SurveyController extends Controller
     }
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'vid' => 'required',
+            'name' => 'required',
+            'cost' => 'required|integer',
+            'terminate_url' => 'required',
+            'quotafull_url' => 'required',
+            'complete_url' => 'required',
+            'number_of_completes' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all(),
+            ]);
+        }
         $host = Str::random();
         $data = array(
             'partner_id' => $request->vid,

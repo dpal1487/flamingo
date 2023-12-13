@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Partners;
+use App\Models\Partner;
 use App\Models\Address;
 use App\Models\Country;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ class PartnerController extends Controller
     }
     public function index()
     {
-        $partners=Partners::paginate(10);
+        $partners=Partner::paginate(10);
         return view('partners.index',compact('partners'));
     }
     public function create()
@@ -28,7 +28,7 @@ class PartnerController extends Controller
     public function store(Request $request)
     {
         $data=array('name'=>$request->name,'terminate_url'=>$request->terminate_url,'complete_url'=>$request->complete_url,'quotafull_url'=>$request->quotafull_url,'latter'=>$request->latter,'gst_number'=>$request->gst_number,'address'=>$request->address,'gst_number'=>$request->gst_number);
-        if($partner=Partners::create($data))
+        if($partner=Partner::create($data))
         {
             Address::create(['partner_id'=>$partner->id,'address'=>$request->address,'city'=>$request->city,'state'=>$request->state,'country_id'=>$request->country,'pincode'=>$request->pincode]);
             if($request->ajax())
@@ -48,7 +48,7 @@ class PartnerController extends Controller
     }
     public function show($id)
     {
-        $partner=Partners::where('id',$id)->first();
+        $partner=Partner::where('id',$id)->first();
         $address=Address::where('partner_id',$id)->first();
         return view('partners.edit',compact('partner','address'),  $this->data);
     }
@@ -59,7 +59,7 @@ class PartnerController extends Controller
     public function update(Request $request, $id)
     {
         $data=array('name'=>$request->name,'terminate_url'=>$request->terminate_url,'complete_url'=>$request->complete_url,'quotafull_url'=>$request->quotafull_url,'latter'=>$request->latter,'gst_number'=>$request->gst_number);
-        if(Partners::where('id',$id)->update($data))
+        if(Partner::where('id',$id)->update($data))
         {
             Address::updateOrCreate(['partner_id'=>$id],['address'=>$request->address,'city'=>$request->city,'state'=>$request->state,'country_id'=>$request->country,'pincode'=>$request->pincode]);
             return redirect('partners');
@@ -78,7 +78,7 @@ class PartnerController extends Controller
      */
     public function destroy($id)
     {
-        if(Partners::where('id',$id)->delete())
+        if(Partner::where('id',$id)->delete())
         {
             return response()->json(['success'=>true,'message'=>'Partner successfully deleted.']);
         }
@@ -87,7 +87,7 @@ class PartnerController extends Controller
     {
         do {
            $id = Str::random( 20 );
-        } while ( Partners::where( 'id', $id )->exists() );
+        } while ( Partner::where( 'id', $id )->exists() );
         return $id;
     }
 }

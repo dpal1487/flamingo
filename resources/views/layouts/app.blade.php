@@ -34,13 +34,18 @@
 
   <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
 
-  {{-- <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/.png')}}" /> --}}
+
   <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}" />
 
 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   @yield('head')
-
+  <style>
+    .error {
+      color: #ff0000 !important;
+      /* Yahan aap apne pasandeeda color code ka istemal karein */
+    }
+  </style>
 </head>
 
 <body data-gr-c-s-loaded="true" class="light light-sidebar theme-white">
@@ -164,21 +169,21 @@
   <script src="{{url('assets/js/app.min.js')}}"></script>
 
   <!-- JS Libraies -->
-
+  <!-- 
   <script src="{{url('assets/bundles/chartjs/chart.min.js')}}"></script>
 
-  <script src="{{url('assets/bundles/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{url('assets/bundles/apexcharts/apexcharts.min.js')}}"></script> -->
 
   <!-- Page Specific JS File -->
 
-  <script src="{{url('assets/js/page/index.js')}}"></script>
+  <!-- <script src="{{url('assets/js/page/index.js')}}"></script> -->
 
   <!-- Template JS File -->
 
   <script src="{{url('assets/js/scripts.js')}}"></script>
 
   <!-- Custom JS File -->
-
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="{{url('assets/js/custom.js')}}"></script>
 
   @yield('js')

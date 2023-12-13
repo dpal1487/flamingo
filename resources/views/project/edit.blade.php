@@ -8,9 +8,6 @@
 
 @section('head')
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<link rel="stylesheet" href="/resources/demos/style.css">
 
 @endsection
 
@@ -18,208 +15,194 @@
 
 <div class="main-content">
 
-        <section class="section">
+  <section class="section">
 
-          <div class="section-header">
+    <div class="section-header">
 
-            <h1>Project</h1>
+      <h1>Project</h1>
 
-            <div class="section-header-breadcrumb">
+      <div class="section-header-breadcrumb">
 
-              <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
 
-              <div class="breadcrumb-item"><a href="#">Edit Project</a></div>
+        <div class="breadcrumb-item"><a href="/projects">Projects</a></div>
 
-            </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-12 col-md-12 col-lg-12">
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h4>Edit Project</h4>
 
           </div>
 
-          <div class="row">
+          <div class="card-body">
 
-            <div class="col-12 col-md-12 col-lg-12">
+            <form action="{{url('project/update')}}" method="post">
 
-                <div class="card">
+              <div class="modal-body">
 
-                  <div class="card-header">
+                {{csrf_field()}}
 
-                    <h4>Edit Project</h4>
+                <div class="row">
+
+                  <div class="form-group col-sm-6">
+
+                    <label for="name">Project Name</label>
+
+                    <input type="text" class="form-control" id="name" name="name" required placeholder="Enter project name" value="{{$project->project_name}}" />
 
                   </div>
 
-                  <div class="card-body">
 
-                    <form action="{{url('project/update')}}" method="post">
+                  <div class="form-group col-sm-6">
 
-                    <div class="modal-body">
+                    <label for="client">Client Name</label>
+                    <select class="form-control" id="client" name="client">
+                      @foreach($partners as $partner)
+                      <option value="{{$partner->latter}}" {{$project->client==$partner->latter ? 'selected' : ''}}>{{$partner->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
 
-                      {{csrf_field()}}
+                  <input type="hidden" name="id" value="{{$project->id}}" />
 
-                      <div class="row">
+                  <div class="form-group col-sm-6">
 
-                        <div class="form-group col-sm-6">
+                    <label for="client_live_url">Client Live URL</label>
 
-                          <label for="name">Project Name</label>
+                    <input type="text" class="form-control" id="client_live_url" name="client_live_url" required placeholder="Client live url" value="{{$project->client_live_url}}" />
 
-                          <input type="text" class="form-control" id="name" name="name" required placeholder="Enter project name" value="{{$project->project_name}}"/>
+                  </div>
 
-                        </div>
+                  <div class="form-group col-sm-6">
 
+                    <label for="client_test_url">Client Test URL</label>
 
-                        <div class="form-group col-sm-6">
+                    <input type="text" class="form-control" id="client_test_url" name="client_test_url" required placeholder="Client test url" value="{{$project->client_test_url}}" />
 
-                          <label for="client">Client Name</label>
-                          <select class="form-control" id="client" name="client">
-                            @foreach($partners as $partner)
-                              <option value="{{$partner->latter}}" {{$project->client==$partner->latter ? 'selected' : ''}}>{{$partner->name}}</option>
-                            @endforeach
-                          </select>
-                        </div>
+                  </div>
 
-                        <input type="hidden" name="id" value="{{$project->id}}"/>
+                  <div class="form-group col-sm-6">
 
-                        <div class="form-group col-sm-6">
+                    <label for="country">Country</label>
 
-                          <label for="client_live_url">Client Live URL</label>
+                    <select class="form-control" name="country" id="country">
+                      <option value="">--Select Country--</option>
+                      @foreach($countries as $country)
+                      <option value="{{$country->iso2}}" {{$country->iso2==$project->country ? 'selected' : ''}}>{{$country->name}}</option>
 
-                          <input type="text" class="form-control" id="client_live_url" name="client_live_url" required placeholder="Client live url" value="{{$project->client_live_url}}"/>
+                      @endforeach
 
-                        </div>
+                    </select>
 
-                        <div class="form-group col-sm-6">
+                  </div>
 
-                          <label for="client_test_url">Client Test URL</label>
+                  <div class="form-group col-sm-6">
 
-                          <input type="text" class="form-control" id="client_test_url" name="client_test_url" required placeholder="Client test url" value="{{$project->client_test_url}}"/>
+                    <label for="cost">Cost/Interview</label>
 
-                        </div>
+                    <input type="text" class="form-control" id="cost" name="cost" required placeholder="Cost per interview" value="{{$project->cost}}" />
 
-                        <div class="form-group col-sm-6">
+                  </div>
 
-                          <label for="country">Country</label>
+                  <div class="form-group col-sm-6">
 
-                          <select class="form-control" name="country" id="country">
-                            <option value="">--Select Country--</option>
-                            @foreach($countries as $country)
-                            <option value="{{$country->iso2}}" {{$country->iso2==$project->country ? 'selected' : ''}}>{{$country->name}}</option>
+                    <label for="time_period">Time Period (In Minutes)</label>
 
-                            @endforeach
+                    <input type="text" class="form-control" id="time_period" name="time_period" required placeholder="Time Period (In Minutes)" value="{{$project->time}}" />
 
-                          </select>
+                  </div>
 
-                        </div>
+                  <div class="form-group col-sm-6">
 
-                        <div class="form-group col-sm-6">
+                    <label for="ir">Incedance Rate</label>
 
-                          <label for="cost">Cost/Interview</label>
+                    <input type="text" class="form-control" id="ir" name="ir" required placeholder="Incedance Rate" value="{{$project->incedance_rate}}" />
 
-                          <input type="text" class="form-control" id="cost" name="cost" required placeholder="Cost per interview" value="{{$project->cost}}"/>
+                  </div>
 
-                        </div>
+                  <div class="form-group col-sm-6">
 
-                        <div class="form-group col-sm-6">
+                    <label for="num_of_complete">Number Of Completes</label>
 
-                          <label for="time_period">Time Period (In Minutes)</label>
+                    <input type="text" class="form-control" id="num_of_complete" name="num_of_complete" required placeholder="Number of complete" value="{{$project->number_of_complete}}" />
 
-                          <input type="text" class="form-control" id="time_period" name="time_period" required placeholder="Time Period (In Minutes)" value="{{$project->time}}"/>
+                  </div>
 
-                        </div>
+                  <div class="form-group col-sm-6">
 
-                        <div class="form-group col-sm-6">
+                    <label for="country">Industry</label>
 
-                          <label for="ir">Incedance Rate</label>
+                    <select class="form-control" name="industry" id="industry">
+                      <option value="">--Select Industry--</option>
 
-                          <input type="text" class="form-control" id="ir" name="ir" required placeholder="Incedance Rate" value="{{$project->incedance_rate}}"/>
+                      @foreach($industries as $industry)
+                      <option value="{{$industry->id}}" {{$industry->id==$project->industry_id ? 'selected' : ''}}>{{$industry->name}}</option>
 
-                        </div>
+                      @endforeach
 
-                        <div class="form-group col-sm-6">
+                    </select>
 
-                          <label for="num_of_complete">Number Of Completes</label>
+                  </div>
 
-                          <input type="text" class="form-control" id="num_of_complete" name="num_of_complete" required placeholder="Number of complete" value="{{$project->number_of_complete}}"/>
+                  <div class="form-group col-sm-6">
 
-                        </div>
+                    <label for="end_time">Remarks</label>
 
-                        <div class="form-group col-sm-6">
+                    <textarea class="form-control" name="remarks" required placeholder="Remarks">{{$project->remarks}}</textarea>
 
-                          <label for="country">Industry</label>
+                  </div>
 
-                          <select class="form-control" name="industry" id="industry">
-                            <option value="">--Select Industry--</option>
+                  <div class="form-group col-sm-6">
 
-                            @foreach($industries as $industry)
-                            <option value="{{$industry->id}}" {{$industry->id==$project->industry_id ? 'selected' : ''}}>{{$industry->name}}</option>
-                            
-                            @endforeach
+                    <label for="status">Status</label>
 
-                          </select>
+                    <select class="form-control" name="status">
 
-                        </div>
+                      <option value="open" {{$project->status=='open' ? 'selected' : ''}}>Open</option>
 
-                        <div class="form-group col-sm-6">
+                      <option value="close" {{$project->status=='close' ? 'selected' : ''}}>Close</option>
+                      <option value="invoiced" {{$project->status == 'invoiced' ? 'selected' : ''}}>Invoiced</option>
+                      <option value="archived" {{$project->status == 'archived' ? 'selected' : ''}}>Archived</option>
 
-                          <label for="end_time">Remarks</label>
+                    </select>
 
-                          <textarea class="form-control" name="remarks" required placeholder="Remarks">{{$project->remarks}}</textarea>
-
-                        </div>
-
-                        <div class="form-group col-sm-6">
-
-                          <label for="status">Status</label>
-
-                          <select class="form-control" name="status">
-
-                            <option value="open" {{$project->status=='open' ? 'selected' : ''}}>Open</option>
-
-                            <option value="close" {{$project->status=='close' ? 'selected' : ''}}>Close</option>
-                            <option value="invoiced" {{$project->status == 'invoiced' ? 'selected' : ''}}>Invoiced</option>
-                            <option value="archived" {{$project->status == 'archived' ? 'selected' : ''}}>Archived</option>
-
-                          </select>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <div class="card-footer">
-
-                      <button type="submit" class="btn btn-primary">Submit</button>
-
-                      <a href="{{url('projects')}}" class="btn btn-info">Back</a>
-
-                    </div>
-
-                    </form>
+                  </div>
 
                 </div>
 
               </div>
 
+              <div class="card-footer">
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <a href="{{url('projects')}}" class="btn btn-info">Back</a>
+
+              </div>
+
+            </form>
+
           </div>
 
-        </section>
+        </div>
 
-      </div>  
+      </div>
+
+  </section>
+
+</div>
 
 @endsection
 
 @section('js')
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script>
-
-  $( function() {
-
-    $( "#end_date" ).datepicker();
-
-  } );
-
-  </script>
 
 @endsection
