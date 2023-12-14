@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Partner;
 use App\Models\PartnerProject;
-use App\Exports\PartnerSurveys;
 use App\Exports\PartnerSurveysExport;
 use App\Models\PartnerSurvey;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +35,7 @@ class SurveyController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'vid' => 'required',
+            'pid' => 'required',
             'name' => 'required',
             'cost' => 'required|integer',
             'terminate_url' => 'required',
@@ -43,6 +43,7 @@ class SurveyController extends Controller
             'complete_url' => 'required',
             'number_of_completes' => 'required|integer',
         ]);
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -137,7 +138,6 @@ class SurveyController extends Controller
     }
     public function surveyStatus(Request $request)
     {
-        //return $request->all();
         $project = Project::where(['id' => $request->pid])->first();
         if (!empty($project)) {
             return '<tr>
@@ -194,14 +194,10 @@ class SurveyController extends Controller
     }
     public function export($pid, $ptid)
     {
-        //return $pid;
-        //return $ptid;
         if (!empty($pid) && !empty($ptid)) {
             $array = array('pid' => $pid, 'ptid' => $ptid);
             $project_id = Project::where('id', $pid)->first()->project_id;
             $name = strtoupper(Partner::where('id', $ptid)->first()?->name);
-
-            // return $name;
             return Excel::download(new PartnerSurveysExport($array), $name . '_' . $project_id . '.xlsx');
         } else {
             return redirect()->back();

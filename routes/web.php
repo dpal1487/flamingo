@@ -76,7 +76,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('survey/partner/remove/{id}', [SurveyController::class, 'destroy']);
     Route::get('survey/export/{pid}/{ptid}', [SurveyController::class, 'export']);
 
-
     /*Project Controller*/
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('project/create', [ProjectController::class, 'create']);

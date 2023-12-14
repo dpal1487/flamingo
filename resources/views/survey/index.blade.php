@@ -209,7 +209,6 @@
                 <tbody>
 
 
-
                 </tbody>
 
               </table>
@@ -229,13 +228,9 @@
     <div id="viewModal" class="modal fade" role="dialog">
 
       <div class="modal-dialog modal-xl">
-
         <!-- Modal content-->
-
         <div class="modal-content">
-
           <div class="modal-header">
-
             <h5 class="modal-title">Partner Survey Complete Details</h5>
 
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -433,9 +428,9 @@
 
             <div class="modal-footer">
 
-              <button type="submit" class="btn btn-primary">Submit</button>
-
-
+              <button type="submit" id="submit" class="btn btn-primary" style="width: 80px;">
+                Submit
+              </button>
 
               <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
 
@@ -457,6 +452,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
       $(function() {
+
         var action, modal;
         $('body').on('change', '#partner_list', function() {
           $.ajax({
@@ -510,7 +506,11 @@
             }
           },
           submitHandler: function(form) {
-            console.log("sd")
+            // <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            const submitBtn = document.getElementById("submit");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm align-middle ms-2"></span>`;
+
             $.ajax({
               type: "POST",
               url: $(form).attr('action'),
@@ -524,6 +524,10 @@
                   console.log("Error form", data.errors, "error");
                   // swal("Error", data.errors, "error");
                 }
+              },
+              complete: () => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "Submit";
               }
             });
             return false; // required to block normal submit since you used ajax
@@ -540,7 +544,7 @@
           });
         }
         $("body").on("click", "#partnerListBtn", function() {
-          $("#partnerList tbody").html('');
+          $("#partnerList tbody").html(`<tr> <td colspan = "7" style="height: 120px; vertical-align: middle; text-align: center;"><span class = "spinner-border spinner-border-sm align-middle ms-2" style="height:30px;width:30px;" > </span> </td> </tr>`);
           var pid = $(this).attr('data-val');
           $.ajax({
             type: "POST",
@@ -585,7 +589,7 @@
         $('body').on('click', '.view-status-btn', function() {
           var pid = $(this).attr('data-pid');
           var vid = $(this).attr("data-vid");
-          $("#viewModal tbody").html('');
+          $("#viewModal tbody").html('`<tr> <td colspan = "10" style="height: 180px; vertical-align: middle; text-align: center;"><span class = "spinner-border spinner-border-sm align-middle ms-2" style="height:30px;width:30px;" > </span> </td> </tr>`');
           $.ajax({
             type: "POST",
             url: "/survey/partner/status",
