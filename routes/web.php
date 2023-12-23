@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RedirectController;
-use App\Http\Controllers\RespondentController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\SurveyInitiateController;
 use App\Http\Controllers\UserController;
@@ -16,7 +14,6 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Artisan;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,6 +43,14 @@ Route::get('/clear-session', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
+Route::get('/optimize-clear', function () {
+    Artisan::call('optimize:clear');
+    return "Optimization cache is cleared";
+});
+Route::get('/composer-update', function () {
+    $output = shell_exec('composer update');
+    return "<pre>$output</pre>";
+});
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'postLogin']);
@@ -54,11 +59,6 @@ Route::group(['middleware' => 'guest'], function () {
 
 // Admin login controller
 
-// Route::group(['middleware' => 'guest' , 'prefix' => 'admin'], function () {
-//     Route::get('/login', [AdminAuthController ::class ,'index'])->name('admin.login');
-//     Route::post('/login', [AdminAuthController::class , 'adminLogin']);
-//     Route::post('logout', [AdminAuthController::class , 'logout'])->name('admin.logout');
-//     });
 //Home Controller
 Route::group(['middleware' => 'auth:admin'], function () {
 
