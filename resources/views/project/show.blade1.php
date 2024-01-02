@@ -28,53 +28,53 @@ Surveys
                 <div class="breadcrumb-item"><a href="#">Surveys</a></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
 
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-md">
-                        @if($surveys)
-                        <thead>
-                            <tr>
-                                <th>Survey Name</th>
-                                <th>N</th>
-                                <th>LOI</th>
-                                <th>IR</th>
-                                <th>CPI</th>
-                                <th>Country</th>
-                                <th>Device Type</th>
-                                <th>Live Link</th>
-                                <th>Test Link</th>
+                @foreach($surveys as $survey)
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="flex-1">
+                                <div class="text-gray-800 fs-6 fw-bold">
+                                    {{$survey->project->project_id}}
+                                </div>
+                            </div>
+                            <div class="flex-1 fw-bold">
+                                <span>${{$survey->project?->cost}}/-CPI</span>
+                            </div>
+                            <div class="flex-1 fw-bold">
+                                <span>{{$survey->project?->number_of_complete}}Min/LOI</span>
+                            </div>
+                            <div class="flex-1 fw-bold">
+                                <span>{{$survey->project?->incedance_rate}}%/IR</span>
+                            </div>
 
-                            </tr>
-                        </thead>
-                        <tbody class="project-list">
-                            @foreach($surveys as $survey)
-                            <tr>
-                                <td>{{$survey->project->project_name}} - {{$survey?->project->country}}</td>
-                                <td>{{$survey->project?->number_of_complete}}</td>
-                                <td>{{$survey->project->time}}</td>
-                                <td>{{$survey->project?->incedance_rate}}</td>
-                                <td>{{$survey->project?->cost}}</td>
-                                <td>{{$survey->project?->country}}</td>
-                                <td>{{$survey->project?->device_type}} </td>
-                                <td><button class="btn btn-primary copyButton" data-val="{{$survey->project?->client_live_url}}">Live Link</button> </td>
-                                <td> <button class="btn btn-primary copyButton" data-val="{{$survey->project?->client_test_url}}">Test Link</button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        @else
-                        <h2 class="text-center">No Project Found</h2>
-                        @endif
-                    </table>
+                            <div class="flex-1 fw-bold">
+                                <span>{{$survey->project?->country}}</span>
+                            </div>
+                            <div class="flex-1 fw-bold">
+                                <button class="btn btn-primary copyButton" data-val="{{$survey->project?->client_live_url}}">Live Link</button>
+                            </div>
+                            <div class="flex-1 fw-bold">
+                                <button class="btn btn-primary copyButton" data-val="{{$survey->project?->client_test_url}}">Test Link</button>
+                            </div>
+
+                            <div class="flex-1 fw-bold">
+                                @if ($survey->project?->admin)
+                                <span> {{$survey->project?->admin->first_name}} {{$survey->project?->admin?->last_name}}</span>
+                                @else
+                                <span><i class="bi bi-people me-2"></i>Admin</span>
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="card-footer text-right paginate-main">
-            </div>
+                @endforeach
 
+            </div>
         </div>
-
 
     </section>
 </div>

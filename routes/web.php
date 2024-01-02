@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('project/update', [ProjectController::class, 'update']);
     Route::post('project/new-link', [ProjectController::class, 'addLinks']);
     Route::post('project/update-link', [ProjectController::class, 'updateLinks']);
-    //Route::post('projects/status/{status}','ProjectController::class,'@projectStatus');
+    Route::post('project/update/count/{id}', [ProjectController::class, 'projectCountUpdate']);
     Route::post('project/update/status/{id}', [ProjectController::class, 'updateStatus']);
     Route::post('project/remove/{id}', [ProjectController::class, 'destroy']);
 

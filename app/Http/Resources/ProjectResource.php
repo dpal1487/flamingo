@@ -5,23 +5,21 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectListResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
-     *
      */
-    public static $wrap = null;
-
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'user' => $this->admin,
+            // 'user' => $this->admin,
             'project_id' => $this->project_id,
             'project_name' => $this->project_name,
+            'device_type' => explode(' , ', $this->device_type),
             'client' => $this->client,
             'client_type' => $this->client?->type,
             'country' => $this->country,
@@ -37,9 +35,6 @@ class ProjectListResource extends JsonResource
             'status' => $this->status,
             'end_date' => $this->end_date,
             'industry' => $this->industry,
-            'gender' => $this->gender,
-            'min_age' => $this->min_age,
-            'max_age' => $this->max_age,
         ];
     }
 }
