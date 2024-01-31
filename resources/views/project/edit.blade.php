@@ -265,15 +265,12 @@
                 // Add more choices as needed
             ]
         });
-
         var multipleCancelButton = new Choices('#multiSelect', {
             removeItemButton: false,
             maxItemCount: 5,
             searchResultLimit: 5,
             renderChoiceLimit: 15,
         });
-
-
     });
 </script>
 @endsection
