@@ -23,8 +23,13 @@ class ProjectController extends Controller
     {
         $this->data['countries'] = Country::orderBy('name', 'asc')->get();
     }
-    public function index()
+    public function index(Request $request)
     {
+        $projects = Project::orderBy('id', 'desc');
+        if (!empty($request->q)) {
+            $projects = Project::where('project_name', 'like', '%' . $request->q . '%')->orWhere('project_id', 'like', '%' . $request->q . '%')->orderBy('id', 'desc');
+        }
+        $this->data['projects'] = ProjectListResource::collection($projects->paginate(10)->appends($request->all()));
         return view('project.index', $this->data);
     }
     public function create()

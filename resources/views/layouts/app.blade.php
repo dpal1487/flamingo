@@ -4,189 +4,184 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
 
-  <title>@yield('title' ?? 'Home') | Flamingo Insights</title>
+    <title>@yield('title' ?? 'Home') | Flamingo Insights</title>
 
-  <!-- General CSS Files -->
+    <!-- General CSS Files -->
 
-  <link rel="stylesheet" href="{{url('assets/css/app.min.css')}}">
+    <link rel="stylesheet" href="{{url('assets/css/app.min.css')}}">
 
-  <link rel="stylesheet" href="{{url('assets/bundles/jqvmap/dist/jqvmap.min.css')}}">
+    <link rel="stylesheet" href="{{url('assets/bundles/jqvmap/dist/jqvmap.min.css')}}">
 
-  <link rel="stylesheet" href="{{url('assets/bundles/weather-icon/css/weather-icons.min.css')}}">
+    <link rel="stylesheet" href="{{url('assets/bundles/weather-icon/css/weather-icons.min.css')}}">
 
-  <link rel="stylesheet" href="{{url('assets/bundles/weather-icon/css/weather-icons-wind.min.css')}}">
+    <link rel="stylesheet" href="{{url('assets/bundles/weather-icon/css/weather-icons-wind.min.css')}}">
 
-  <link rel="stylesheet" href="{{url('assets/bundles/summernote/summernote-bs4.css')}}">
+    <link rel="stylesheet" href="{{url('assets/bundles/summernote/summernote-bs4.css')}}">
 
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-  <!-- Template CSS -->
+    <!-- Template CSS -->
 
-  <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
 
-  <link rel="stylesheet" href="{{url('assets/css/components.css')}}">
+    <link rel="stylesheet" href="{{url('assets/css/components.css')}}">
 
-  <!-- Custom style CSS -->
+    <!-- Custom style CSS -->
 
-  <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
-
-
-  <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}" />
+    <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
 
 
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-  @yield('head')
-  <style>
-    .error {
-      color: #ff0000 !important;
-      /* Yahan aap apne pasandeeda color code ka istemal karein */
-    }
-  </style>
+    <link rel='shortcut icon' type='image/x-icon' href="{{url('assets/img/favicon.ico')}}" />
+
+
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    @yield('head')
+    <style>
+        .error {
+            color: #ff0000 !important;
+            /* Yahan aap apne pasandeeda color code ka istemal karein */
+        }
+    </style>
 </head>
 
 <body data-gr-c-s-loaded="true" class="light light-sidebar theme-white">
 
-  <div id="app">
+    <div id="app">
 
-    <div class="main-wrapper main-wrapper-1">
+        <div class="main-wrapper main-wrapper-1">
 
-      <div class="navbar-bg"></div>
+            <div class="navbar-bg"></div>
 
-      <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #f7f6f2;">
+            <nav class="navbar navbar-expand-lg main-navbar" style="background-color: #f7f6f2;">
 
-        <div class="form-inline mr-auto">
+                <div class="form-inline mr-auto">
 
-          <ul class="navbar-nav mr-3">
+                    <ul class="navbar-nav mr-3">
 
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i class="fas fa-bars"></i></a></li>
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i class="fas fa-bars"></i></a></li>
 
-            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                        <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
 
-                <i class="fas fa-expand"></i>
+                                <i class="fas fa-expand"></i>
 
-              </a>
+                            </a>
 
-            </li>
+                        </li>
 
-          </ul>
+                    </ul>
 
-        </div>
+                </div>
 
-        <ul class="navbar-nav navbar-right">
+                <ul class="navbar-nav navbar-right">
 
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 
-              <img alt="image" src="https://flamingoinsights.com/assets/logo.png" class="user-img-radious-style">
+                            <img alt="image" src="https://flamingoinsights.com/assets/logo.png" class="user-img-radious-style">
 
-              <span class="d-sm-none d-lg-inline-block"></span></a>
+                            <span class="d-sm-none d-lg-inline-block"></span></a>
 
-            <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-menu dropdown-menu-right">
 
-              <div class="dropdown-title">Hello Flamingo Insights</div>
+                            <div class="dropdown-title">Hello Flamingo Insights</div>
 
-              <a href="#" class="dropdown-item has-icon">
+                            <a href="#" class="dropdown-item has-icon">
 
-                <i class="fas fa-cog"></i> Settings
+                                <i class="fas fa-cog"></i> Settings
 
-              </a>
+                            </a>
 
-              <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider"></div>
 
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
-                this.closest('form').submit();"> Logout</a>
-              </form>
-              {{-- <a href="/logout" class="dropdown-item has-icon text-danger">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                this.closest('form').submit();"> <i class="fas fa-sign-out-alt"></i>Logout</a>
+                            </form>
 
-                <i class="fas fa-sign-out-alt"></i> Logout
+                        </div>
 
-              </a> --}}
+                    </li>
 
+                </ul>
+
+            </nav>
+
+            <div class="main-sidebar sidebar-style-2">
+
+                <aside id="sidebar-wrapper">
+
+                    <div class="sidebar-brand" style="background-color: #e4e5ddb0; box-shadow: 40px -2px 56px #615c5c;">
+
+                        <a href="{{url('')}}">
+
+                            <img alt="image" src="https://flamingoinsights.com/assets/logo.png" class="header-logo" />
+
+                        </a>
+
+                    </div>
+
+                    <ul class="sidebar-menu">
+                        <!--<li class="menu-header">Main</li>-->
+
+                        <li><a class="nav-link" href="{{url('/')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        </li>
+                        <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
+                        <li><a class="nav-link" href="{{url('/industries')}}"><i class="fa fa-industry"></i><span>Industries</span></a>
+                        <li><a class="nav-link" href="{{url('surveys')}}"><i class="fa fa-poll"></i><span>Partner Surveys</span></a></li>
+                        <li><a class="nav-link" href="{{url('partners')}}"><i class="fa fa-address-card"></i><span>Partners</span></a></li>
+                        <li><a class="nav-link" href="{{url('/users')}}"><i class="fas fa-user"></i><span>Users</span></a></li>
+                    </ul>
+                </aside>
             </div>
+            <div class="wrapper">
+                @include('layouts.notification')
+                @yield('content')
+            </div>
+            <footer class="main-footer">
 
-          </li>
+                <div class="footer-left">
 
-        </ul>
+                    Copyright &copy; 2021 <div class="bullet"></div> Design By <a href="https://www.softication.com">Softcation</a>
 
-      </nav>
+                </div>
 
-      <div class="main-sidebar sidebar-style-2">
+                <div class="footer-right">
 
-        <aside id="sidebar-wrapper">
+                </div>
 
-          <div class="sidebar-brand" style="background-color: #d7d6d0;">
-
-            <a href="{{url('')}}">
-
-              <img alt="image" src="https://flamingoinsights.com/assets/logo.png" class="header-logo" />
-
-            </a>
-
-          </div>
-
-          <ul class="sidebar-menu">
-            <!--<li class="menu-header">Main</li>-->
-
-            <li><a class="nav-link" href="{{url('/')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-            </li>
-            <li><a class="nav-link" href="{{url('projects')}}"><i class="fas fa-project-diagram"></i><span>Projects</span></a></li>
-            <li><a class="nav-link" href="{{url('/industries')}}"><i class="fa fa-industry"></i><span>Industries</span></a>
-            <li><a class="nav-link" href="{{url('surveys')}}"><i class="fa fa-poll"></i><span>Partner Surveys</span></a></li>
-            <li><a class="nav-link" href="{{url('partners')}}"><i class="fa fa-address-card"></i><span>Partners</span></a></li>
-            <li><a class="nav-link" href="{{url('/users')}}"><i class="fas fa-user"></i><span>Users</span></a></li>
-          </ul>
-        </aside>
-      </div>
-      <div class="wrapper">
-        @include('layouts.notification')
-        @yield('content')
-      </div>
-      <footer class="main-footer">
-
-        <div class="footer-left">
-
-          Copyright &copy; 2021 <div class="bullet"></div> Design By <a href="https://www.softication.com">Softcation</a>
+            </footer>
 
         </div>
-
-        <div class="footer-right">
-
-        </div>
-
-      </footer>
 
     </div>
 
-  </div>
+    <!-- General JS Scripts -->
 
-  <!-- General JS Scripts -->
+    <script src="{{url('assets/js/app.min.js')}}"></script>
 
-  <script src="{{url('assets/js/app.min.js')}}"></script>
-
-  <!-- JS Libraies -->
-  <!-- 
+    <!-- JS Libraies -->
+    <!--
   <script src="{{url('assets/bundles/chartjs/chart.min.js')}}"></script>
 
   <script src="{{url('assets/bundles/apexcharts/apexcharts.min.js')}}"></script> -->
 
-  <!-- Page Specific JS File -->
+    <!-- Page Specific JS File -->
 
-  <!-- <script src="{{url('assets/js/page/index.js')}}"></script> -->
+    <!-- <script src="{{url('assets/js/page/index.js')}}"></script> -->
 
-  <!-- Template JS File -->
+    <!-- Template JS File -->
 
-  <script src="{{url('assets/js/scripts.js')}}"></script>
+    <script src="{{url('assets/js/scripts.js')}}"></script>
 
-  <!-- Custom JS File -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="{{url('assets/js/custom.js')}}"></script>
+    <!-- Custom JS File -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{url('assets/js/custom.js')}}"></script>
 
-  @yield('js')
+    @yield('js')
 
 </body>
 
