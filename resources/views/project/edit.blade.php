@@ -65,7 +65,7 @@
                                 <div class="form-group col-sm-6">
 
                                     <label for="client">Client Name</label>
-                                    <select class="form-control" id="client_id" name="client_id">
+                                    <select class="form-control" id="multiSelect" name="client_id">
                                         @foreach($partners as $partner)
                                         <option value="{{$partner->id}}" {{$project->client?->id==$partner->id ? 'selected' : ''}}>{{$partner->name}}</option>
                                         @endforeach
@@ -91,17 +91,14 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Select Device Type</label>
+                                    <select class="form-control" id="multiSelectDeviceType" placeholder="Select device type" name="device_type[]" multiple>
 
-                                    <select class="form-control" id="multiSelect" placeholder="Select device type" name="device_type[]" multiple>
-                                        <option value="desktop" data-value="desktop">Desktop/Laptop</option>
-                                        <option value="mobile" data-value="mobile">Mobile</option>
-                                        <option value="tablet" data-value="tablet">Tablet</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label for="gender">Gender</label>
-                                    <select class="form-control" name="gender">
+                                    <select class="form-control" name="gender" id="multiSelect">
                                         <option value="male" {{$project->gender=='male' ? 'selected' : ''}}>Male</option>
                                         <option value="female" {{$project->gender=='female' ? 'selected' : ''}}>Female</option>
                                     </select>
@@ -129,7 +126,7 @@
 
                                     <label for="country">Country</label>
 
-                                    <select class="form-control" name="country" id="country">
+                                    <select class="form-control" name="country" id="multiSelect">
                                         <option value="">--Select Country--</option>
                                         @foreach($countries as $country)
                                         <option value="{{$country->iso2}}" {{$country->iso2==$project->country ? 'selected' : ''}}>{{$country->name}}</option>
@@ -176,7 +173,7 @@
 
                                     <label for="country">Industry</label>
 
-                                    <select class="form-control" name="industry" id="industry">
+                                    <select class="form-control" name="industry" id="multiSelect">
                                         <option value="">--Select Industry--</option>
 
                                         @foreach($industries as $industry)
@@ -194,7 +191,7 @@
 
                                     <label for="status">Status</label>
 
-                                    <select class="form-control" name="status">
+                                    <select class="form-control" name="status" id="multiSelect">
 
                                         <option value="open" {{$project->status=='open' ? 'selected' : ''}}>Open</option>
 
@@ -245,11 +242,11 @@
 <script>
     $(document).ready(function() {
         var selectedValues = @json($project->device_type); // Convert comma-separated string to array
-        var multipleCancelButton = new Choices('#multiSelect', {
+        var multipleCancelButton = new Choices('#multiSelectDeviceType', {
             removeItemButton: true,
             maxItemCount: 5,
             searchResultLimit: 5,
-            renderChoiceLimit: 5,
+            renderChoiceLimit: 15,
             choices: [{
                     value: 'desktop',
                     label: 'Desktop/Laptop',
@@ -267,6 +264,13 @@
                 }
                 // Add more choices as needed
             ]
+        });
+
+        var multipleCancelButton = new Choices('#multiSelect', {
+            removeItemButton: false,
+            maxItemCount: 5,
+            searchResultLimit: 5,
+            renderChoiceLimit: 15,
         });
 
 

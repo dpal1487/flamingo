@@ -139,6 +139,56 @@ Dashboard
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Surveys Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-invoice">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>UID</th>
+                                        <th>PID</th>
+                                        <th>IP Address</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="project-list">
+                                    @foreach($surveys as $survey)
+                                    <tr>
+                                        <td class="font-weight-600">{{$survey->uid}}</td>
+                                        <td class="font-weight-600">{{$survey->pid}}</td>
+                                        <td class="font-weight-600">{{$survey->ip_address}}</td>
+                                        <td class="font-weight-600">{{$survey->date}}</td>
+                                        <td>
+                                            @if ($survey->status == 'complete')
+                                            <div class="badge badge-success">{{$survey->status}}</div>
+                                            @elseif($survey->status == 'terminate')
+                                            <div class="badge badge-danger">{{$survey->status}}</div>
+                                            @elseif($survey->status == 'qutofull')
+                                            <div class="badge badge-warning">{{$survey->status}}</div>
+                                            @elseif($survey->status == 'security_terminate')
+                                            <div class="badge badge-danger">{{$survey->status}}</div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right paginate-main">
+                        {{$surveys->links('pagination::bootstrap-5')}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 @endsection

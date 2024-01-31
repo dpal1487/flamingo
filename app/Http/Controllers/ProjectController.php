@@ -23,20 +23,8 @@ class ProjectController extends Controller
     {
         $this->data['countries'] = Country::orderBy('name', 'asc')->get();
     }
-    public function index(Request $request)
+    public function index()
     {
-        // $this->data['partners'] = Partner::orderBy('id', 'desc')->get();
-        if ($request->ajax()) {
-            return $this->projectFilter($request);
-        } else {
-            if (!empty($request->keyword)) {
-                $projects = Project::where('project_name', 'like', '%' . $request->keyword . '%')->orWhere('project_id', 'like', '%' . $request->keyword . '%')->orderBy('id', 'desc')->paginate(15);
-            } else {
-                $projects = Project::orderBy('id', 'desc')->paginate(15);
-            }
-
-            $this->data['projects'] = ProjectListResource::collection($projects);
-        }
         return view('project.index', $this->data);
     }
     public function create()
@@ -48,7 +36,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-
+        // return $request;
         $id = IdGenerator::generate(['table' => 'projects', 'field' => 'project_id', 'length' => 10, 'prefix' => 'IWIN' . date('ym')]);
         $data = array(
             'project_id' => $id,
@@ -178,12 +166,7 @@ class ProjectController extends Controller
         } else {
         }
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         if (Project::where('id', $id)->delete()) {
@@ -203,10 +186,11 @@ class ProjectController extends Controller
         $keyword = $request->keyword;
         $data = "";
         if (!empty($keyword)) {
-            $projects = Project::where('project_name', 'like', '%' . $keyword . '%')->orWhere('project_id', 'like', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate(15);
+            $projects = Project::where('project_name', 'like', '%' . $keyword . '%')->orWhere('project_id', 'like', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate(1)->appends($request->except('page'));
         } else {
-            $projects = Project::orderBy('id', 'desc')->paginate(15);
+            $projects = Project::orderBy('id', 'desc')->paginate(10)->appends($request->except('page'));
         }
+        $projects = ProjectListResource::collection($projects);
         if (!empty($projects) && count($projects)) {
             foreach ($projects as $project) {
                 $open = $project->status == "open" ? "selected" : "";
@@ -216,13 +200,15 @@ class ProjectController extends Controller
                 $archived = $project->status == "archived" ? "selected" : "";
                 $data .= '<tr>
           <td>' . $project->project_id . '</td>
-          <td>' . strtoupper($project->client) . '_' . $project->project_name . ' - (' . $project->country . ')</td>
+          <td>' . strtoupper($project->client?->name) . '_' . $project->project_name . ' - (' . $project->country . ')</td>
           <td class="td-link"><a href="' . $project->client_live_url . '">' . $project->client_live_url . '</button></td>
             <td class="td-link"><a href="' . $project->client_test_url . '">' . $project->client_test_url . '</button></td>
-          <td>' . $project->time_preiod . '</td>
-          <!-- <td>' . $project->end_date . '</td> -->
+          <td>' . strtoupper($project->gender) . '</td>
+          <td>' . $project->min_age . '</td>
+          <td>' . $project->max_age . '</td>
+          <td>' . '<input type="number" class="form-control count" style="width: 80px;" id="count" value="' . $project->count . '" data-id="' . $project->id . '" />' . '</td>
           <td>
-            <select class="form-control status" data-id="' . $project->id . '">
+            <select class="form-control status" style="width:100px" data-id="' . $project->id . '">
               <option value="">Select status</option>
               <option value="open" ' . $open . '>Open</option>
               <option value="close" ' . $close . '>Close</option>
@@ -235,7 +221,8 @@ class ProjectController extends Controller
           <button class="btn btn-info update-link" data-toggle="modal" data-target="#updateLink" data-pid="' . $project->project_id . '" data-id="' . $project->id . '" id="updateLinkBtn"><i class="fa fa-link"></i></button>
           <button class="btn btn-success add-link" data-toggle="modal" data-target="#addLink" data-pid="' . $project->project_id . '" data-id="' . $project->id . '" id="partnerListBtn"><i class="fa fa-plus"></i></button>
           <button class="btn btn-danger remove-btn"data-pid="' . $project->project_id . '" data-id="' . $project->id . '"><i class="fa fa-trash"></i></button></td>
-        </tr>';
+
+          </tr>';
             }
             return array('projects' => $data, 'paginate' => (string)$projects->links());
         } else {

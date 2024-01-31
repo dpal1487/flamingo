@@ -17,19 +17,10 @@ use Maatwebsite\Excel\Facades\Excel;
 class SurveyController extends Controller
 {
     private $data;
-    public function index(Request $request)
+    public function index()
     {
-        $data['partners'] = Partner::orderBy('id', 'desc')->get();
-        if ($request->ajax()) {
-            return $this->projectFilter($request);
-        } else {
-            if (!empty($request->keyword)) {
-                $data['projects'] = Project::where('project_name', 'like', '%' . $request->keyword . '%')->orWhere('project_id', 'like', '%' . $request->keyword . '%')->orderBy('id', 'desc')->paginate(40);
-            } else {
-                $data['projects'] = Project::orderBy('id', 'desc')->paginate(40);
-            }
-        }
-        return view('survey.index', $data);
+        $this->data['partners'] = Partner::orderBy('id', 'desc')->get();
+        return view('survey.index', $this->data);
     }
     public function store(Request $request)
     {
@@ -57,7 +48,7 @@ class SurveyController extends Controller
             'project_id' => $request->pid,
             'partner_name' => $request->name,
             'survey_name' => $request->survey_name,
-            'survey_link' => 'https://dashboard.flamingoinsights.com/surveyInitiate?vid=' . $request->vid . '&pid=' . $request->pid . '&toid=XXXXXX',
+            'survey_link' => 'https://dashboard.flamingoinsights.com/surveyInitiate?pid=' . $request->pid . '&uid=' . $request->vid . '&toid=XXXXXX',
             'cost' => $request->cost,
             'number_of_completes' => $request->number_of_completes,
             'message' => $request->message,
@@ -112,7 +103,7 @@ class SurveyController extends Controller
             'partner_id' => $request->vid,
             'project_id' => $request->pid,
             'partner_name' => $request->name,
-            'survey_link' => 'https://dashboard.flamingoinsights.com/surveyInitiate?pid=' . $request->pid . '&vid=' . $request->vid . '&toid=XXXXXX',
+            'survey_link' => 'https://dashboard.flamingoinsights.com/surveyInitiate?pid=' . $request->pid . '&uid=' . $request->vid . '&toid=XXXXXX',
             'cost' => $request->cost,
             'number_of_completes' => $request->number_of_completes,
             'message' => $request->message,
@@ -152,37 +143,6 @@ class SurveyController extends Controller
               <td></td>
               <td><button class="btn btn-primary"><a class="text-white" target="_blank" href="survey/export/' . $request->pid . '/' . $request->vid . '"><i class="fa fa-download"></i></a></button></td>
             </tr>';
-        }
-    }
-    public function projectFilter($request)
-    {
-        $keyword = $request->keyword;
-        $projects = "";
-        if (!empty($keyword)) {
-            $projects = Project::where('project_name', 'like', '%' . $keyword . '%')->orWhere('project_id', 'like', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate(15);
-        } else {
-            $projects = Project::orderBy('id', 'desc')->paginate(15);
-        }
-        if (!empty($projects) && count($projects)) {
-            foreach ($projects as $project) {
-                $this->data .= '<tr>
-            <td>' . $project->id . '</td>
-            <td>' . $project->project_id . '</td>
-            <td class="no-wrap">' . $project->project_name . '-' . $project->country . '</td>
-            <td>' . count(PartnerSurvey::where(array('project_id' => $project->id, 'status' => 'complete'))->get()) . '</td>
-            <td>' . count(PartnerSurvey::where(array('project_id' => $project->id, 'status' => 'terminate'))->get()) . '</td>
-            <td>' . count(PartnerSurvey::where(array('project_id' => $project->id, 'status' => ''))->get()) . '</td>
-            <td>' . count(PartnerSurvey::where(array('project_id' => $project->id, 'status' => 'quotafull'))->get()) . '</td>
-            <td>' . $project->incedance_rate . '</td>
-            <td>' . $project->time . '</td>
-            <td></td>
-            <td>' . strtoupper($project->status) . '</td>
-            <th><button class="btn btn-outline-success" data-toggle="modal" data-target="#partnerModal" data-action="/survey/partner/store" data-name="' . $project->project_name . ' - ' . $project->country . ' (' . $project->project_id . ')" data-val="' . $project->id . '" id="partner-modal-btn" data-cpi="' . $project->cost . '">Add Partner</button></th>
-            <th><button class="btn btn-outline-info" data-toggle="modal" data-target="#partnerList" data-val="' . $project->id . '" id="partnerListBtn">List Partner</button></th>
-            </tr>';
-            }
-            return array('projects' => $this->data, 'paginate' => (string)$projects->links());
-        } else {
         }
     }
     public function destroy($id)

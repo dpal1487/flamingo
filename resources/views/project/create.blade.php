@@ -64,8 +64,8 @@ Add Project
                                 <div class="form-group col-sm-6">
 
                                     <label for="client">Client Name</label>
-                                    <select class="form-control" id="client_id" name="client_id">
-                                        <option value="">--Client Name--</option>
+                                    <select class="form-control" id="multiSelect" placeholder="Select Client Name" name="client_id">
+                                        <option value="">--Select Client--</option>
                                         @foreach($partners as $partner)
                                         <option value="{{$partner->id}}">{{$partner->name}}</option>
                                         @endforeach
@@ -87,7 +87,6 @@ Add Project
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Select Device Type</label>
-
                                     <select class="form-control" id="multiSelect" placeholder="Select device type" name="device_type[]" multiple>
                                         <option value="desktop">Desktop/Laptop</option>
                                         <option value="mobile">Mobile</option>
@@ -95,8 +94,8 @@ Add Project
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="gender">Gender</label>
-                                    <select class="form-control" name="gender">
+                                    <label>Gender</label>
+                                    <select class="form-control" name="gender" id="multiSelect">
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </select>
@@ -122,7 +121,7 @@ Add Project
 
                                     <label for="country">Country</label>
 
-                                    <select class="form-control" name="country" id="country">
+                                    <select class="form-control" name="country" id="multiSelect">
                                         <option value="">--Select Country--</option>
                                         @foreach($countries as $country)
 
@@ -168,7 +167,7 @@ Add Project
                                 <div class="form-group col-sm-6">
                                     <label for="num_of_complete">Select Industry</label>
 
-                                    <select class="form-control" name="industry" id="industry">
+                                    <select class="form-control" name="industry" id="multiSelect">
                                         <option value="">--Select Industry--</option>
 
                                         @foreach($industries as $industry)
@@ -183,7 +182,7 @@ Add Project
 
                                 <div class="form-group col-sm-6">
                                     <label for="status">Status</label>
-                                    <select class="form-control" name="status">
+                                    <select class="form-control" name="status" id="multiSelect">
                                         <option value="">--Select Status--</option>
                                         <option value="open">Open</option>
                                         <option value="close">Close</option>
@@ -232,12 +231,12 @@ Add Project
 
 <script>
     $(document).ready(function() {
-
         var multipleCancelButton = new Choices('#multiSelect', {
-            removeItemButton: true,
-            maxItemCount: 5,
+            removeItemButton: false,
+            maxItemCount: 15,
             searchResultLimit: 5,
-            renderChoiceLimit: 5
+            renderChoiceLimit: 25,
+            placeholder: true,
         });
 
 

@@ -17,10 +17,13 @@ class PartnerSurveyResources extends JsonResource
         return [
             'id' => $this->id,
             'uid' => $this->uid,
+            'pid' => $this->pid,
+            'ip_address' => $this->ip_address,
             'starting_ip' => $this->starting_ip,
             'end_ip' => $this->end_ip,
             'status' => $this->status,
-            'date' => date('d-m-Y H:i:s', strtotime($this->created_at)),
+            'date' => date('d-m-Y H:i:s', strtotime($this->date)),
+            'created_at' => date('d-m-Y H:i:s', strtotime($this->created_at)),
             'duration' => $this->created_at->diff($this->end_survey)->format('%H:%I:%S'),
             'project' => $this->project,
             'partner' => $this->partner

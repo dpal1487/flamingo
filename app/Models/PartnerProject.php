@@ -13,4 +13,9 @@ class PartnerProject extends Model
     {
     	return $this->hasOne(Project::class, 'id','project_id');
     }
+
+    public function completes()
+    {
+        return $this->hasMany(Survey::class, 'project_link_id', 'id')->where('status', 'complete');
+    }
 }
